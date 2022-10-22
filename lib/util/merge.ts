@@ -1,10 +1,10 @@
-import mergeWith from "lodash/mergeWith"
-import { DeeplyPartial } from "@/types"
+import mergeWith from "lodash/mergeWith";
+import { DeeplyPartial } from "./types";
 
 export interface MergeOptions {
   /** Default is 'overwrite' */
-  arrayResolution?: "overwrite" | "concat" | "merge"
-  mutate?: boolean
+  arrayResolution?: "overwrite" | "concat" | "merge";
+  mutate?: boolean;
 }
 
 /** @todo document and test */
@@ -20,26 +20,26 @@ export const merge = <T>(
       any
     ]),
     (targetValue: any, sourceValue: any) => {
-      const isSourceArray = Array.isArray(sourceValue)
-      const isTargetArray = Array.isArray(targetValue)
+      const isSourceArray = Array.isArray(sourceValue);
+      const isTargetArray = Array.isArray(targetValue);
       if (isSourceArray || isTargetArray) {
         switch (options?.arrayResolution || "overwrite") {
           case "overwrite":
-            return sourceValue
+            return sourceValue;
           case "concat":
             if (!isTargetArray) {
-              return [targetValue].concat(sourceValue)
+              return [targetValue].concat(sourceValue);
             }
-            return targetValue.concat(sourceValue)
+            return targetValue.concat(sourceValue);
           case "merge":
             if (!isTargetArray) {
-              return sourceValue
+              return sourceValue;
             }
             if (!isSourceArray) {
-              return targetValue
+              return targetValue;
             }
-            return merge(sourceValue, targetValue, options)
+            return merge(sourceValue, targetValue, options);
         }
       }
     }
-  ) as any
+  ) as any;

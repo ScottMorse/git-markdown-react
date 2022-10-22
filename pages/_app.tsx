@@ -1,16 +1,30 @@
 import { useGarkdownStore } from "@/lib/store/store";
 import { THEMES } from "@/lib/styles/theme";
 import type { AppProps } from "next/app";
-import { ThemeProvider } from "theme-ui";
+import { useEffect, ReactNode } from "react";
+import { ThemeProvider, useColorMode, ColorM } from "theme-ui";
 
-function MyApp({ Component, pageProps }: AppProps) {
+export const AppProviders = ({ children }: { children: ReactNode }) => {
   const theme = useGarkdownStore((store) => store.theme);
 
-  return (
-    <ThemeProvider theme={THEMES[theme]}>
-      <Component {...pageProps} />
-    </ThemeProvider>
-  );
-}
+  return <ThemeProvider theme={THEMES[theme]}>{children}</ThemeProvider>;
+};
 
-export default MyApp;
+const AppMain = ({ Component, pageProps }: AppProps) => {
+  const colorMode = useGarkdownStore((store) => store.colorMode);
+  const [_, setColorMode] = useColorMode();
+
+  useEffect(() => {
+    setColorMode(colorMode);
+  }, [colorMode]);
+
+  return <Component {...pageProps} />;
+};
+
+const App = (props: AppProps) => (
+  <AppProviders>
+    <AppMain {...props} />
+  </AppProviders>
+);
+
+export default App;
