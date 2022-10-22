@@ -2,7 +2,7 @@ import { useGarkdownStore } from "@/lib/store/store";
 import { THEMES } from "@/lib/styles/theme";
 import type { AppProps } from "next/app";
 import { useEffect, ReactNode } from "react";
-import { ThemeProvider, useColorMode, ColorM } from "theme-ui";
+import { ThemeProvider, useColorMode } from "theme-ui";
 
 export const AppProviders = ({ children }: { children: ReactNode }) => {
   const theme = useGarkdownStore((store) => store.theme);
